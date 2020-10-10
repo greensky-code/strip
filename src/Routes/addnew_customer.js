@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var stripe = require('stripe')('sk_test_51HaE0kLTAKjofwlPktX1hhR197MW5h5zSjVndRpnZXeF9gMtejPVoD2mm4SyNMc1xf7g9tRxKSaWX7Xi7KbzwUAc00Czmk7Ub9');
+const Stripe = require('stripe');
+const stripe = Stripe('sk_test_51HaE0kLTAKjofwlPktX1hhR197MW5h5zSjVndRpnZXeF9gMtejPVoD2mm4SyNMc1xf7g9tRxKSaWX7Xi7KbzwUAc00Czmk7Ub9');
+
 
 
 //  get all data base modal
@@ -45,11 +47,11 @@ router.post('/addnewcoutomer', async function (req, res) {
                     console.log("success : " + JSON.stringify(token))
                     req.body.token_id = token.id
                     // this function work to update user base card data
-                    stripe.customers.createSource(req.body.cus_id, req.body.token_id, async function (err, card) {
+                    stripe.customers.createSource(customer.id , {source:token.id} , async function (err, card) {
                         if (err) {
                             console.log("err" + " :" + err)
                         }
-                        if (!card) {
+                        if (card) {
                             console.log("success : " + JSON.stringify(card))
                             req.body.token_id = token.id
                              let customers_data = new  customer_create(req.body)
@@ -64,6 +66,37 @@ router.post('/addnewcoutomer', async function (req, res) {
             })
         }
     })
+})
+
+
+router.post('/chargecustomer' , async function(req,res){
+   var param ={
+        amount : req.body.amount,
+        currency : req.body.currency,
+        description : req.body.description,
+        customer : req.body.cus_id,
+        name: req.body.name,
+        address:req.body.address
+    }
+    stripe.charges.create(param, async function (err, charge) {
+        if (err) {
+            console.log("err" + " :" + err)
+            res.send({value: err})
+        }
+        if (charge) {
+            console.log("success : " + JSON.stringify(charge))
+            let result = await customer_create.update({cus_id:req.body.cus_id},
+                {
+                    $set: {
+                        charge_id: charge.id,
+                      
+                    }
+                })
+            if(result){
+                res.send({status:200, value : result})
+            }
+        }
+})
 })
 
 router.post('/getuserdata', async function (req, res) {

@@ -21,7 +21,11 @@ currency: {
     type:String
 },
 
-cus_token:{
+token_id:{
+    type:String
+},
+
+charge_id:{
     type:String
 }
 

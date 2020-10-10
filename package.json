@@ -16,7 +16,7 @@
     "md5": "^2.2.1",
     "mongoose": "^5.9.2",
     "nodemailer": "^6.4.5",
-    "stripe": "^8.108.0"
+    "stripe": "^8.109.0"
   },
   "devDependencies": {},
   "scripts": {
