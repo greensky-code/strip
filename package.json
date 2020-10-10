@@ -1,0 +1,27 @@
+{
+  "name": "node-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^3.1.1",
+    "body-parse": "^0.1.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "cron": "^1.8.2",
+    "express": "^4.17.1",
+    "glob": "^7.1.6",
+    "joi": "^14.3.1",
+    "lodash": "^4.17.15",
+    "md5": "^2.2.1",
+    "mongoose": "^5.9.2",
+    "nodemailer": "^6.4.5",
+    "stripe": "^8.108.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
