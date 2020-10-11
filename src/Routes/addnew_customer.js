@@ -27,6 +27,7 @@ router.post('/addnewcoutomer', async function (req, res) {
     stripe.customers.create(param,  function (err, customer) {
         if (err) {
             console.log("err" + " :" + err)
+            res.send({value: err})
         }
         if (customer) {
             console.log("success : " + JSON.stringify(customer))
@@ -42,6 +43,7 @@ router.post('/addnewcoutomer', async function (req, res) {
             stripe.tokens.create(param, function (err, token) {
                 if (err) {
                     console.log("err" + " :" + err)
+                    res.send({value: err})
                 }
                 if (token) {
                     console.log("success : " + JSON.stringify(token))
@@ -50,6 +52,7 @@ router.post('/addnewcoutomer', async function (req, res) {
                     stripe.customers.createSource(customer.id , {source:token.id} , async function (err, card) {
                         if (err) {
                             console.log("err" + " :" + err)
+                            res.send({value: err})
                         }
                         if (card) {
                             console.log("success : " + JSON.stringify(card))
